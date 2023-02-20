@@ -4,10 +4,15 @@ const PORT = 3000;
 
 const  server = http.createServer((req,res) =>{
     res.writeHead(200, { //status code 200 = OK
-        'Content-Type': 'text/plain',
+        'Content-Type': 'application/json',
     })
 
-    res.end('Hello World!');
+    res.end(JSON.stringify( //string is expected we should use stringify function
+        {
+            id: 1,
+            name: 'Zoltan',
+        }
+    ));
 });
 
 server.listen(PORT, () => {
