@@ -4,22 +4,43 @@ const PORT = 3000;
 
 const  server = http.createServer();
 
+const users = [
+    {
+        id: 0,
+        name: 'Attila',
+    },
+    {
+        id: 1,
+        name: 'Zoltan',
+    },
+    {
+        id: 2,
+        name: 'Laszlo',
+    }
+
+]
+
 server.on('request',(req,res) =>{ //request events
 
-    if (req.url === '/users'){
+    const urlItems = req.url.split('/');
+    // /users/1 -> ['','users','1']
+
+    if (urlItems[1] === 'users'){
         res.statusCode = 200;
         res.setHeader('Content-Type','application/json');
         
-        res.write(JSON.stringify( //string is expected we should use stringify function
-        {
-            id: 1,
-            name: 'Zoltan',
+        const userIndex = Number(urlItems[2]);
+        //string is expected we should use stringify function
+        if (urlItems.length === 3){
+            res.write(JSON.stringify(users[userIndex]));
+        }        
+        else {
+            res.write(JSON.stringify(users));
         }
-        ));
 
         res.end();
     }
-    else if(req.url === '/messages'){
+    else if(urlItems[1] === 'messages'){
         res.statusCode = 200;
         res.setHeader('Content-Type','text/html');
 
