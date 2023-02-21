@@ -25,7 +25,16 @@ server.on('request',(req,res) =>{ //request events
     const urlItems = req.url.split('/');
     // /users/1 -> ['','users','1']
 
-    if (urlItems[1] === 'users'){
+    if (req.method==='POST' && urlItems[1] === 'users'){
+        req.on('data', (data) => {
+            const user = data.toString();
+            console.log(`Request: ${user}`);
+            users.push(JSON.parse(user));
+        });
+
+        req.pipe(res);
+    }
+    else if (req.method==='GET' && urlItems[1] === 'users'){
         res.statusCode = 200;
         res.setHeader('Content-Type','application/json');
         
@@ -40,7 +49,7 @@ server.on('request',(req,res) =>{ //request events
 
         res.end();
     }
-    else if(urlItems[1] === 'messages'){
+    else if(req.method==='GET' && urlItems[1] === 'messages'){
         res.statusCode = 200;
         res.setHeader('Content-Type','text/html');
 
