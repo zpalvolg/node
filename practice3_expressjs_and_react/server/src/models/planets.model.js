@@ -1,9 +1,8 @@
-//build in modules
+//built in modules
 const fs = require('fs');
 const path = require('path');
 //3rd party modules
 const { parse } = require('csv-parse');
-
 
 const habitablePlanets = [];
 
