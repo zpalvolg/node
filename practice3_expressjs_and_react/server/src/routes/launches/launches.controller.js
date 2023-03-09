@@ -32,7 +32,24 @@ function addNewLaunch(req, res){
     return res.status(201).json(launch);
 }
 
+function abortLaunch (req,res){
+    //using id from /launches/:id and convert it to number from string
+    const launchId = Number(req.params.id);
+
+    if(!launchesModel.checkLaunchById(launchId)){
+        //400 = bad request
+        return res.status(400).json({
+            error: 'Launch not found!'
+        });
+    }
+
+    const aborted = launchesModel.abortLaunchByid(launchId);
+    
+    return res.status(200).json(aborted);
+}
+
 module.exports = {
     getAllLaunches,
     addNewLaunch,
+    abortLaunch,
 };
